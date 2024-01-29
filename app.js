@@ -24,6 +24,10 @@ app.get("/", (req, res) => {
   res.render("index", { locals });
 });
 
+app.get("*", (req, res) => {
+  res.render("404");
+});
+
 app.listen(port, () => {
   console.log(`App connect with port ${port}`);
 });
