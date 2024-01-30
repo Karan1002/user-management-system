@@ -5,6 +5,8 @@ const app = express();
 
 const port = 3000 || process.env.PORT;
 
+const connectDB = require("./server/config/db");
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -16,17 +18,15 @@ app.use(expressEjsLayouts);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
 
-app.get("/", (req, res) => {
-  const locals = {
-    title: "User Management System",
-    description: "User Management System Node JS",
-  };
-  res.render("index", { locals });
-});
+//home route path
+app.use("/", require("./server/routes/customerRoutes"));
 
 app.get("*", (req, res) => {
   res.render("404");
 });
+
+//connect DB
+connectDB();
 
 app.listen(port, () => {
   console.log(`App connect with port ${port}`);
