@@ -9,6 +9,7 @@ const {
   editCustomerData,
   editPostCustomerData,
   deleteCustomerData,
+  searchCustomerData,
 } = require("../controllers/customerController");
 
 router.route("/").get(homepage);
@@ -21,5 +22,7 @@ router.route("/edit/:id").get(editCustomerData);
 router.route("/edit/:id").put(editPostCustomerData);
 
 router.route("/edit/:id").delete(deleteCustomerData);
+
+router.route("/search").post(searchCustomerData);
 
 module.exports = router;

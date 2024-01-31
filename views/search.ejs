@@ -1,27 +1,18 @@
 <div
   class="d-flex justify-content-between flex-wrap flex-md nowrap align-items-center pt-3 pb-2 mb-3 border-bottom"
 >
-  <h1 class="h2">Dashboard</h1>
+  <h1 class="h2">Search <%= customerData.firstName %></h1>
   <div class="btn-toolbar mb-2 mb-md 0">
     <div class="btn-group me-2">
-      <a href="/add" class="btn btn-sm btn-outline-secondary">+ New User</a>
+      <button class="btn btn-sm btn-outline-secondary" onClick="history.back()">
+        Back
+      </button>
     </div>
   </div>
 </div>
 
-<% messages.forEach(element => { %>
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-  <%= element %>
-  <button
-    type="button"
-    class="btn-close"
-    data-bs-dismiss="alert"
-    aria-label="Close"
-  ></button>
-</div>
-<% }) %>
-
 <div class="table-responsive">
+  <% if (customerData!="") { %>
   <table class="table table-striped table-sm">
     <thead>
       <tr>
@@ -73,50 +64,7 @@
       <% }) %>
     </tbody>
   </table>
-</div>
-
-<div
-  class="modal fade"
-  id="deleteModal"
-  data-bs-backdrop="static"
-  data-bs-keyboard="false"
-  tabindex="-1"
-  aria-labelledby="staticBackdropLabel"
-  aria-hidden="true"
->
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">
-          You are about to remove a customer record.
-        </h1>
-        <button
-          type="button"
-          class="btn-close"
-          data-bs-dismiss="modal"
-          aria-label="Close"
-        ></button>
-      </div>
-      <div class="modal-body">
-        <p>
-          This will remove the customer record of.
-          <b class="fw-bold"></b><br />
-          Are you Sure?
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Close</button
-        ><% customerData.forEach(element => { %>
-        <form
-          action="/edit/<%= element._id %>?_method=DELETE"
-          method="post"
-          class="position-relative"
-        >
-          <% }) %>
-          <button type="submit" class="btn btn-primary">Yes, Remove</button>
-        </form>
-      </div>
-    </div>
-  </div>
+  <% } else{%>
+  <h2>No result found</h2>
+  <% } %>
 </div>

@@ -78,6 +78,7 @@ const editPostCustomerData = async (req, res) => {
       details: req.body.details,
       updateAt: Date.now(),
     });
+    // await res.redirect(`/edit/${req.params.id}`);
     await res.redirect(`/edit/${req.params.id}`);
   } catch (error) {
     console.log(error);
@@ -92,6 +93,26 @@ const deleteCustomerData = async (req, res) => {
     console.log(error);
   }
 };
+
+const searchCustomerData = async (req, res) => {
+  const locals = {
+    title: "Search Customer Data",
+    description: "User Management System Node JS",
+  };
+  try {
+    let searchTerm = req.body.searchTerm;
+    const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9]/g, "");
+    const customerData = await customerModel.find({
+      $or: [
+        { firstName: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+        { lastName: { $regex: new RegExp(searchNoSpecialChar, "i") } },
+      ],
+    });
+    res.render("search", { customerData, locals });
+  } catch (error) {
+    console.log(error);
+  }
+};
 module.exports = {
   homepage,
   addCustomer,
@@ -100,4 +121,5 @@ module.exports = {
   editCustomerData,
   editPostCustomerData,
   deleteCustomerData,
+  searchCustomerData,
 };
