@@ -9,6 +9,9 @@ const connectDB = require("./server/config/db");
 const session = require("express-session");
 const flash = require("connect-flash");
 const methodOverride = require("method-override");
+// import { injectSpeedInsights } from "@vercel/speed-insights";
+
+// injectSpeedInsights();
 
 app.use(
   session({
