@@ -58,15 +58,15 @@
               <i class="bi bi-pencil"></i
             ></a>
 
-            <form
-              action="/edit/<%= element._id %>?_method=DELETE"
-              method="POST"
-              class="position-relative"
+            <button
+              type="button"
+              class="btn btn-danger btn-small"
+              data-bs-toggle="modal"
+              id="deleteButton"
+              data-bs-target="#deleteModal"
             >
-              <button type="submit" class="btn btn-danger btn-small">
-                <i class="bi bi-person-x"></i>
-              </button>
-            </form>
+              <i class="bi bi-person-x"></i>
+            </button>
           </div>
         </td>
       </tr>
@@ -75,7 +75,48 @@
   </table>
 </div>
 
-
-<% if (customerData.length>0) { %>
- hello
-<% } %>
+<div
+  class="modal fade"
+  id="deleteModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="staticBackdropLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">
+          You are about to remove a customer record.
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>
+          This will remove the customer record of.
+          <b class="fw-bold"></b><br />
+          Are you Sure?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Close</button
+        ><% customerData.forEach(element => { %>
+        <form
+          action="/edit/<%= element._id %>?_method=DELETE"
+          method="post"
+          class="position-relative"
+        >
+          <% }) %>
+          <button type="submit" class="btn btn-primary">Yes, Remove</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

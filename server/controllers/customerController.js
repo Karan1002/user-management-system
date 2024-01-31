@@ -21,7 +21,7 @@ const addCustomer = async (req, res) => {
     title: "Add New Customer",
     description: "User Management System Node JS",
   };
-  res.render("customer/add", { locals });
+  res.render("customer/addCustomerData.ejs", { locals });
 };
 
 const postCustomer = async (req, res) => {
@@ -40,4 +40,64 @@ const postCustomer = async (req, res) => {
     console.log(error);
   }
 };
-module.exports = { homepage, addCustomer, postCustomer };
+
+const viewCustomerData = async (req, res) => {
+  try {
+    const customerData = await customerModel.findOne({ _id: req.params.id });
+    const locals = {
+      title: "Customer Data",
+      description: "User Management System Node JS",
+    };
+    // console.log(customerData);
+    res.render("customer/viewCustomerData", { customerData, locals });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const editCustomerData = async (req, res) => {
+  try {
+    const customerData = await customerModel.findOne({ _id: req.params.id });
+    const locals = {
+      title: "Edit Customer Data",
+      description: "User Management System Node JS",
+    };
+    res.render("customer/editCustomerData", { customerData, locals });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const editPostCustomerData = async (req, res) => {
+  try {
+    await customerModel.findByIdAndUpdate(req.params.id, {
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      tel: req.body.tel,
+      email: req.body.email,
+      details: req.body.details,
+      updateAt: Date.now(),
+    });
+    await res.redirect(`/edit/${req.params.id}`);
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const deleteCustomerData = async (req, res) => {
+  try {
+    await customerModel.deleteOne({ _id: req.params.id });
+    res.redirect("/");
+  } catch (error) {
+    console.log(error);
+  }
+};
+module.exports = {
+  homepage,
+  addCustomer,
+  postCustomer,
+  viewCustomerData,
+  editCustomerData,
+  editPostCustomerData,
+  deleteCustomerData,
+};

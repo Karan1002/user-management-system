@@ -8,7 +8,7 @@ const connectDB = require("./server/config/db");
 //session
 const session = require("express-session");
 const flash = require("connect-flash");
-// const { flash } = require("express-flash-message");
+const methodOverride = require("method-override");
 
 app.use(
   session({
@@ -26,6 +26,7 @@ app.use(flash({ sessionKeyName: "flash message" }));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(methodOverride("_method"));
 
 //static files      html css js
 app.use(express.static("public"));
