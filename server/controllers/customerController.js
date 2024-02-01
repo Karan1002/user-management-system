@@ -13,6 +13,10 @@ const homepage = async (req, res) => {
     res.render("index", { locals, messages, customerData });
   } catch (error) {
     console.log(error);
+    return res.status(200).json({
+      success: true,
+      result: error.messages,
+    });
   }
 };
 
